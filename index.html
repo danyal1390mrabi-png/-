@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>میان ده سؤال</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --ink: #1B1F3B;
+    --ink-soft: #2E3358;
+    --paper: #F7F1E3;
+    --paper-dim: #EDE4CF;
+    --wax: #A6303F;
+    --wax-dark: #7E2431;
+    --gold: #C9A227;
+    --text-dark: #241F1A;
+    --muted: #756F63;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0; padding:0;
+    background: var(--ink);
+    font-family: 'Vazirmatn', sans-serif;
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  body{
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(201,162,39,0.08), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(166,48,63,0.10), transparent 45%);
+    display:flex;
+    justify-content:center;
+    padding: 40px 16px 80px;
+  }
+
+  .wrap{ width:100%; max-width: 560px; }
+
+  .brand{
+    text-align:center;
+    margin-bottom: 28px;
+  }
+  .brand .seal{
+    width:52px; height:52px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, var(--gold), var(--wax) 70%);
+    margin: 0 auto 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  }
+  .brand h1{
+    color: var(--paper);
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: 0.2px;
+  }
+  .brand p{
+    color: rgba(247,241,227,0.65);
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.9;
+  }
+
+  .card{
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 32px 28px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:0; right:0; left:0;
+    height:6px;
+    background: linear-gradient(90deg, var(--wax), var(--gold), var(--wax));
+    border-radius: 4px 4px 0 0;
+  }
+
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom: 26px;
+  }
+  .tab-btn{
+    flex:1;
+    background: transparent;
+    border: 1.5px solid var(--paper-dim);
+    color: var(--muted);
+    padding: 10px 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .tab-btn.active{
+    border-color: var(--wax);
+    color: var(--wax-dark);
+    background: rgba(166,48,63,0.06);
+  }
+
+  h2.section-title{
+    font-size: 19px;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  p.section-sub{
+    font-size: 13.5px;
+    color: var(--muted);
+    margin: 0 0 22px;
+    line-height: 1.8;
+  }
+
+  label{
+    display:block;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+  }
+
+  input[type=text], input[type=password], input[type=number], textarea{
+    width:100%;
+    font-family:inherit;
+    font-size: 14.5px;
+    padding: 11px 12px;
+    border: 1.5px solid var(--paper-dim);
+    border-radius: 3px;
+    background: #fff;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  input:focus, textarea:focus{
+    outline: none;
+    border-color: var(--wax);
+  }
+
+  .q-block{
+    background: var(--paper-dim);
+    border-radius: 3px;
+    padding: 14px 14px 2px;
+    margin-bottom: 14px;
+  }
+  .q-block label{ margin-bottom:8px; }
+
+  button.primary{
+    width:100%;
+    background: var(--wax);
+    color: var(--paper);
+    border: none;
+    padding: 13px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background .15s ease;
+    margin-top: 4px;
+  }
+  button.primary:hover{ background: var(--wax-dark); }
+  button.primary:disabled{ background: #C9BBAE; cursor: not-allowed; }
+
+  button.ghost{
+    width:100%;
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--paper-dim);
+    padding: 10px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  button.ghost:hover{ border-color: var(--ink-soft); }
+
+  .result-box{
+    background: var(--paper-dim);
+    border: 1.5px dashed var(--wax);
+    border-radius: 4px;
+    padding: 20px;
+    text-align:center;
+    margin-bottom: 18px;
+  }
+  .result-box .code{
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--wax-dark);
+    margin: 8px 0 14px;
+    direction: ltr;
+  }
+  .link-row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .link-row input{
+    margin-bottom:0;
+    font-size: 12.5px;
+    direction: ltr;
+    text-align: left;
+  }
+  .link-row button{
+    flex-shrink:0;
+    background: var(--ink);
+    color: var(--paper);
+    border:none;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor:pointer;
+    font-weight:600;
+  }
+
+  .note{
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--paper-dim);
+  }
+
+  .qa-item{
+    background: var(--paper-dim);
+    border-radius: 3px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .qa-item .q{
+    font-weight: 700;
+    font-size: 14.5px;
+    margin-bottom: 8px;
+  }
+  .qa-item .a{
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: pre-wrap;
+  }
+
+  .status-msg{
+    text-align:center;
+    padding: 30px 10px;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  .error-msg{
+    background: rgba(166,48,63,0.08);
+    border: 1px solid rgba(166,48,63,0.3);
+    color: var(--wax-dark);
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+
+  .qcount-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 20px;
+  }
+  .qcount-row input{ margin-bottom:0; width: 80px; text-align:center; }
+
+  .footer-tag{
+    text-align:center;
+    color: rgba(247,241,227,0.4);
+    font-size: 11.5px;
+    margin-top: 22px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="seal"></div>
+    <h1>میان ده سؤال</h1>
+    <p>سوال‌های واقعی‌ات را لابه‌لای ده سوال قایم کن، لینک بده، بعد فقط با رمز خودت جواب‌های واقعی را ببین.</p>
+  </div>
+  <div class="card" id="app"></div>
+  <div class="footer-tag">داده‌ها فقط داخل همین صفحه ذخیره می‌شوند — رمز را ساده نگه دار، امنیت بانکی ندارد.</div>
+</div>
+
+<script>
+// >>> REPLACE THIS with your actual Worker URL after you deploy it <<<
+// It looks like: https://saval-api.YOUR-SUBDOMAIN.workers.dev
+const API_BASE = "https://saval-api.YOUR-SUBDOMAIN.workers.dev";
+
+const app = document.getElementById('app');
+
+function shareLink(id){
+  return location.origin + location.pathname + '#s-' + id;
+}
+
+async function apiCall(action, payload){
+  try{
+    const res = await fetch(API_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action, ...payload })
+    });
+    return await res.json();
+  }catch(e){
+    return { ok:false, error:'network_error' };
+  }
+}
+
+// ---------- HOME (creator) ----------
+let homeTab = 'create';
+let creatorStep = 'count'; // count -> write -> done
+let realCount = 2;
+let realQuestions = [];
+let password = '';
+let lastSession = null;
+
+function renderHome(){
+  if(homeTab === 'create') renderCreate();
+  else renderView();
+}
+
+function renderTabs(){
+  return `
+    <div class="tabs">
+      <button class="tab-btn ${homeTab==='create'?'active':''}" onclick="setTab('create')">ساخت پرسش‌نامه</button>
+      <button class="tab-btn ${homeTab==='view'?'active':''}" onclick="setTab('view')">مشاهده پاسخ‌ها</button>
+    </div>`;
+}
+
+window.setTab = function(t){
+  homeTab = t;
+  if(t === 'create'){ creatorStep = 'count'; lastSession = null; }
+  renderHome();
+}
+
+function renderCreate(){
+  if(creatorStep === 'count'){
+    app.innerHTML = renderTabs() + `
+      <h2 class="section-title">چند سوال واقعی داری؟</h2>
+      <p class="section-sub">این‌ها بین ۱۰ سوال کل قایم می‌شن. بین ۱ تا ۹ تا انتخاب کن.</p>
+      <div class="qcount-row">
+        <input type="number" id="countInput" min="1" max="9" value="${realCount}">
+        <span style="font-size:13.5px;color:var(--muted)">سوال واقعی از ۱۰ تا کل</span>
+      </div>
+      <button class="primary" onclick="goToWrite()">مرحله بعد</button>
+    `;
+  } else if(creatorStep === 'write'){
+    let blocks = '';
+    for(let i=0;i<realCount;i++){
+      blocks += `
+        <div class="q-block">
+          <label>سوال ${i+1}</label>
+          <textarea rows="2" data-idx="${i}" class="realQ" placeholder="متن سوالت رو بنویس...">${realQuestions[i]||''}</textarea>
+        </div>`;
+    }
+    app.innerHTML = renderTabs() + `
+      <h2 class="section-title">سوال‌های واقعی‌ات را بنویس</h2>
+      <p class="section-sub">این‌ها همراه با سوال‌های پرکننده به صورت شانسی قاطی می‌شن، طرف مقابل نمی‌فهمه کدوماش مال توئه.</p>
+      ${blocks}
+      <label>یک رمز برای دیدن جواب‌ها بذار</label>
+      <input type="text" id="pwInput" placeholder="فقط خودت این رمز رو بلدی" value="${password}">
+      <button class="primary" onclick="submitCreate()">ساخت لینک</button>
+      <button class="ghost" onclick="creatorStep='count'; renderCreate();">بازگشت</button>
+      <div id="createErr"></div>
+    `;
+  } else if(creatorStep === 'done'){
+    const link = shareLink(lastSession.id);
+    app.innerHTML = renderTabs() + `
+      <h2 class="section-title">لینک آماده شد</h2>
+      <p class="section-sub">این لینک را برای طرف مقابل بفرست تا به هر ۱۰ سوال جواب بده.</p>
+      <div class="result-box">
+        <div style="font-size:13px;color:var(--muted)">کد پرسش‌نامه</div>
+        <div class="code">${lastSession.id}</div>
+        <div class="link-row">
+          <input type="text" id="linkOut" readonly value="${link}">
+          <button onclick="copyLink()">کپی</button>
+        </div>
+      </div>
+      <div class="note">
+        برای دیدن جواب‌های واقعی بعداً، به تب «مشاهده پاسخ‌ها» برو و کد + رمزی که گذاشتی رو وارد کن.
+        این لینک با همون آدرسی که این صفحه رو باز کردی ساخته شده (وقتی روی saval.danyalcode.ir باشه، لینک هم با همون دامنه‌ست).
+      </div>
+      <button class="ghost" onclick="setTab('create')">ساخت یک پرسش‌نامه دیگه</button>
+    `;
+  }
+}
+
+window.goToWrite = function(){
+  const v = parseInt(document.getElementById('countInput').value, 10);
+  realCount = Math.min(9, Math.max(1, v||1));
+  realQuestions = new Array(realCount).fill('');
+  creatorStep = 'write';
+  renderCreate();
+}
+
+window.submitCreate = async function(){
+  const areas = document.querySelectorAll('.realQ');
+  const qs = [];
+  areas.forEach(a => qs.push(a.value.trim()));
+  const pw = document.getElementById('pwInput').value.trim();
+  const errBox = document.getElementById('createErr');
+
+  if(qs.some(q => !q)){
+    errBox.innerHTML = '<div class="error-msg">همه سوال‌ها رو پر کن.</div>';
+    return;
+  }
+  if(!pw){
+    errBox.innerHTML = '<div class="error-msg">یک رمز بذار.</div>';
+    return;
+  }
+
+  errBox.innerHTML = '<div class="status-msg" style="padding:8px 0;">در حال ساخت لینک...</div>';
+  const result = await apiCall('create', { questions: qs, password: pw });
+
+  if(!result.ok){
+    errBox.innerHTML = '<div class="error-msg">ذخیره‌سازی با خطا مواجه شد (' + (result.error||'نامشخص') + ')، دوباره امتحان کن.</div>';
+    return;
+  }
+
+  realQuestions = qs;
+  password = pw;
+  lastSession = { id: result.id };
+  creatorStep = 'done';
+  renderCreate();
+}
+
+window.copyLink = function(){
+  const el = document.getElementById('linkOut');
+  el.select();
+  document.execCommand('copy');
+}
+
+// ---------- VIEW RESULTS ----------
+let viewState = { id:'', pw:'', loading:false, error:'', session:null };
+
+function renderView(){
+  app.innerHTML = renderTabs() + `
+    <h2 class="section-title">مشاهده پاسخ‌های واقعی</h2>
+    <p class="section-sub">کد پرسش‌نامه و رمزی که موقع ساخت گذاشتی رو وارد کن.</p>
+    <label>کد پرسش‌نامه</label>
+    <input type="text" id="viewIdInput" placeholder="مثلاً AB12CD" value="${viewState.id}" style="direction:ltr;text-align:left;">
+    <label>رمز</label>
+    <input type="password" id="viewPwInput" placeholder="رمزت" value="${viewState.pw}">
+    ${viewState.error ? `<div class="error-msg">${viewState.error}</div>` : ''}
+    <button class="primary" onclick="doView()">نمایش جواب‌ها</button>
+    <div id="viewResults"></div>
+  `;
+}
+
+window.doView = async function(){
+  const id = document.getElementById('viewIdInput').value.trim().toUpperCase();
+  const pw = document.getElementById('viewPwInput').value.trim();
+  viewState.id = id; viewState.pw = pw; viewState.error = '';
+
+  if(!id || !pw){
+    viewState.error = 'کد و رمز رو کامل وارد کن.';
+    renderView();
+    return;
+  }
+
+  const result = await apiCall('view', { id, password: pw });
+  if(!result.ok){
+    const messages = {
+      not_found: 'همچین پرسش‌نامه‌ای پیدا نشد.',
+      wrong_password: 'رمز اشتباهه.',
+      network_error: 'اتصال برقرار نشد، دوباره امتحان کن.'
+    };
+    viewState.error = messages[result.error] || 'خطایی پیش اومد.';
+    renderView();
+    return;
+  }
+
+  renderView();
+  const box = document.getElementById('viewResults');
+  if(!result.answered){
+    box.innerHTML = `<div class="status-msg">هنوز کسی به این پرسش‌نامه جواب نداده.</div>`;
+    return;
+  }
+
+  let html = '';
+  result.items.forEach(item => {
+    html += `
+      <div class="qa-item">
+        <div class="q">${item.text}</div>
+        <div class="a">${(item.answer||'').replace(/</g,'&lt;')}</div>
+      </div>`;
+  });
+  box.innerHTML = html;
+}
+
+// ---------- RESPONDENT ----------
+async function renderRespond(id){
+  app.innerHTML = `<div class="status-msg">در حال بارگذاری سوال‌ها...</div>`;
+  const result = await apiCall('get', { id });
+
+  if(!result.ok){
+    app.innerHTML = `<div class="status-msg">این لینک پیدا نشد یا منقضی شده.</div>`;
+    return;
+  }
+  if(result.answered){
+    app.innerHTML = `<div class="status-msg">این پرسش‌نامه قبلاً پاسخ داده شده. هر لینک فقط یک‌بار قابل پاسخه.</div>`;
+    return;
+  }
+
+  let blocks = '';
+  result.questions.forEach((q,i) => {
+    blocks += `
+      <div class="q-block">
+        <label>${i+1}. ${q.text}</label>
+        <textarea rows="2" class="ansField" data-idx="${i}" placeholder="جوابت..."></textarea>
+      </div>`;
+  });
+
+  app.innerHTML = `
+    <h2 class="section-title">به هر ۱۰ سوال جواب بده</h2>
+    <p class="section-sub">هیچ نشونه‌ای از اینکه کدوم سوال واقعیه وجود نداره، فقط به همه صادقانه جواب بده.</p>
+    ${blocks}
+    <div id="respondErr"></div>
+    <button class="primary" onclick="submitRespond('${id}')">ارسال جواب‌ها</button>
+  `;
+}
+
+window.submitRespond = async function(id){
+  const fields = document.querySelectorAll('.ansField');
+  const answers = [];
+  let allFilled = true;
+  fields.forEach(f => {
+    const v = f.value.trim();
+    if(!v) allFilled = false;
+    answers[parseInt(f.dataset.idx,10)] = v;
+  });
+
+  if(!allFilled){
+    document.getElementById('respondErr').innerHTML = '<div class="error-msg">لطفاً به همه سوال‌ها جواب بده.</div>';
+    return;
+  }
+
+  const result = await apiCall('answer', { id, answers });
+  if(!result.ok){
+    const messages = {
+      already_answered: 'این پرسش‌نامه دیگه در دسترس نیست.',
+      network_error: 'ارسال با خطا مواجه شد، دوباره امتحان کن.'
+    };
+    document.getElementById('respondErr').innerHTML = '<div class="error-msg">' + (messages[result.error] || 'ارسال با خطا مواجه شد، دوباره امتحان کن.') + '</div>';
+    return;
+  }
+
+  app.innerHTML = `<div class="status-msg">جواب‌هات ثبت شد. ممنون که وقت گذاشتی 🌙</div>`;
+}
+
+// ---------- ROUTER ----------
+function route(){
+  const hash = location.hash;
+  if(hash.startsWith('#s-')){
+    renderRespond(hash.slice(3).toUpperCase());
+  } else {
+    renderHome();
+  }
+}
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
