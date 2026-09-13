@@ -420,7 +420,11 @@ window.submitCreate = async function(){
   const result = await apiCall('create', { questions: qs, password: pw });
 
   if(!result.ok){
-    errBox.innerHTML = '<div class="error-msg">ذخیره‌سازی با خطا مواجه شد (' + (result.error||'نامشخص') + ')، دوباره امتحان کن.</div>';
+    if(result.error === 'password_taken'){
+      errBox.innerHTML = '<div class="error-msg">این رمز قبلاً توسط یه پرسش‌نامه‌ی دیگه استفاده شده. یه رمز دیگه انتخاب کن.</div>';
+    } else {
+      errBox.innerHTML = '<div class="error-msg">ذخیره‌سازی با خطا مواجه شد (' + (result.error||'نامشخص') + ')، دوباره امتحان کن.</div>';
+    }
     return;
   }
 
