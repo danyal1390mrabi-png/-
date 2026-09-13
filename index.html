@@ -294,8 +294,7 @@
 </div>
 
 <script>
-// >>> REPLACE THIS with your actual Worker URL after you deploy it <<<
-// It looks like: https://saval-api.YOUR-SUBDOMAIN.workers.dev
+// آدرس Worker شما
 const API_BASE = "https://delicate-queen-430ddd.danyal1390mrabi.workers.dev/";
 
 const app = document.getElementById('app');
@@ -380,16 +379,13 @@ function renderCreate(){
       <h2 class="section-title">لینک آماده شد</h2>
       <p class="section-sub">این لینک را برای طرف مقابل بفرست تا به هر ۱۰ سوال جواب بده.</p>
       <div class="result-box">
-        <div style="font-size:13px;color:var(--muted)">کد پرسش‌نامه</div>
-        <div class="code">${lastSession.id}</div>
         <div class="link-row">
           <input type="text" id="linkOut" readonly value="${link}">
           <button onclick="copyLink()">کپی</button>
         </div>
       </div>
       <div class="note">
-        برای دیدن جواب‌های واقعی بعداً، به تب «مشاهده پاسخ‌ها» برو و کد + رمزی که گذاشتی رو وارد کن.
-        این لینک با همون آدرسی که این صفحه رو باز کردی ساخته شده (وقتی روی saval.danyalcode.ir باشه، لینک هم با همون دامنه‌ست).
+        برای دیدن جواب‌های واقعی بعداً، به تب «مشاهده پاسخ‌ها» برو و فقط رمزی که گذاشتی رو وارد کن.
       </div>
       <button class="ghost" onclick="setTab('create')">ساخت یک پرسش‌نامه دیگه</button>
     `;
@@ -441,15 +437,13 @@ window.copyLink = function(){
   document.execCommand('copy');
 }
 
-// ---------- VIEW RESULTS ----------
-let viewState = { id:'', pw:'', loading:false, error:'', session:null };
+// ---------- VIEW RESULTS (فقط با رمز) ----------
+let viewState = { pw:'', error:'' };
 
 function renderView(){
   app.innerHTML = renderTabs() + `
     <h2 class="section-title">مشاهده پاسخ‌های واقعی</h2>
-    <p class="section-sub">کد پرسش‌نامه و رمزی که موقع ساخت گذاشتی رو وارد کن.</p>
-    <label>کد پرسش‌نامه</label>
-    <input type="text" id="viewIdInput" placeholder="مثلاً AB12CD" value="${viewState.id}" style="direction:ltr;text-align:left;">
+    <p class="section-sub">فقط رمزی که موقع ساخت گذاشتی رو وارد کن.</p>
     <label>رمز</label>
     <input type="password" id="viewPwInput" placeholder="رمزت" value="${viewState.pw}">
     ${viewState.error ? `<div class="error-msg">${viewState.error}</div>` : ''}
@@ -459,20 +453,18 @@ function renderView(){
 }
 
 window.doView = async function(){
-  const id = document.getElementById('viewIdInput').value.trim().toUpperCase();
   const pw = document.getElementById('viewPwInput').value.trim();
-  viewState.id = id; viewState.pw = pw; viewState.error = '';
+  viewState.pw = pw; viewState.error = '';
 
-  if(!id || !pw){
-    viewState.error = 'کد و رمز رو کامل وارد کن.';
+  if(!pw){
+    viewState.error = 'رمز رو وارد کن.';
     renderView();
     return;
   }
 
-  const result = await apiCall('view', { id, password: pw });
+  const result = await apiCall('view', { password: pw });
   if(!result.ok){
     const messages = {
-      not_found: 'همچین پرسش‌نامه‌ای پیدا نشد.',
       wrong_password: 'رمز اشتباهه.',
       network_error: 'اتصال برقرار نشد، دوباره امتحان کن.'
     };
